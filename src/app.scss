@@ -1,0 +1,45 @@
+#root {
+  height: 120vh;
+  background-image: linear-gradient(to right, red, purple 80%);
+}
+
+.firstBigger {
+  h1:nth-child(1) {
+    font-family: 'Permanent Marker';
+    font-size: 4em;
+  }
+}
+
+.pulldown {
+  font-size: 0.7em;
+  color: black;
+  background-color: white;
+}
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.banner {
+  margin-right: 7%;
+  border: 1px solid white;
+  border-radius: 1em;
+  width: 45%;
+  height: 45vh;
+}
+
+.fade {
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+  &-enter,
+  &-enter-active {
+    opacity: 1;
+  }
+  &-exit,
+  &-exit-done {
+    opacity: 0;
+  }
+}

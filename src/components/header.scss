@@ -1,0 +1,15 @@
+.default {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 7%;
+  font-family: 'Maven Pro', 'SimHei';
+  color: white;
+  transition: background-color 0.5s, height 0.5s, font-size 0.5s ease;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+}

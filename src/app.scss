@@ -1,6 +1,6 @@
 #root {
   height: 120vh;
-  background-image: linear-gradient(to right, red, purple 80%);
+  background-image: linear-gradient(to right, #159957, #155799);
 }
 
 .firstBigger {
@@ -25,7 +25,8 @@
 
 .banner {
   margin-right: 7%;
-  border: 1px solid white;
+  //border: 1px solid white;
+  background-color: rgba(255,255,255,.1);
   border-radius: 1em;
   width: 45%;
   height: 45vh;

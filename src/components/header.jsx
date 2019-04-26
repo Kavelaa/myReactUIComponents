@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './header.scss'
 //Props
-//pullClass 处于下拉状态时的额外用户自定义类名，默认提供过渡效果
-//mode 模式,可为fixed,如不是则为正常文档流
+//pullClass 处于下拉状态时的额外用户自定义类名，设置下拉状态时的样式，默认提供过渡效果
+//mode 模式,可为fixed,不填则为正常文档流
 
 class Header extends React.Component {
   state = {

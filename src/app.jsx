@@ -64,7 +64,7 @@ class App extends React.Component {
         <div className="wrapper">
           <Banner
             userClass="banner"
-            srcArr={['github.svg', 'github-pulldown.svg', 'index-drizzle.png']}
+            srcArr={['github.svg', 'github-pulldown.svg', {src:'index-drizzle.png', url:'https://drizzle.one'}]}
             duration={5}
             showProgress
             showIndex

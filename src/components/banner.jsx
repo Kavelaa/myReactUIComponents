@@ -6,8 +6,9 @@ import styles from './banner.module.scss'
 //Props
 //userClass String 用户自定义类名
 //duration Number 轮播切换时间，单位sec
-//srcArr Array 存放图片地址的数组，以数组顺序作为轮播顺序
-//showProgress Bool 是否显示进度条，显示则使用ProgressBar组件的回调机制，不显示则内建定时器执行轮播
+/*srcArr Array 存放图片地址的数组，以数组顺序作为轮播顺序
+  srcArr子元素 String/Object 如需同时将图片作为超链接，以对象{src: String, url: String} (url为希望跳转的网页链接)传入*/
+//showProgress Bool 是否显示进度条，显示则使用ProgressBar组件的回调属性，不显示则内建定时器执行轮播
 //showIndex Bool 是否显示当前轮播序号，默认显示
 
 class Banner extends React.Component {
@@ -77,7 +78,9 @@ class Banner extends React.Component {
         },
         () => {
           setTimeout(() => {
-            this.timer = setInterval(this.change, this.props.duration * 1000)
+            if (!this.props.showProgress) {
+              this.timer = setInterval(this.change, this.props.duration * 1000)
+            }
             this.goBack()
             this.setState({
               switch: true
@@ -97,7 +100,9 @@ class Banner extends React.Component {
         },
         () => {
           setTimeout(() => {
-            this.timer = setInterval(this.change, this.props.duration * 1000)
+            if (!this.props.showProgress) {
+              this.timer = setInterval(this.change, this.props.duration * 1000)
+            }
             this.goAhead()
             this.setState({
               switch: true
@@ -150,26 +155,28 @@ class Banner extends React.Component {
           </div>
         )}
         <div className={styles.wrapper}>
-          <Transition
-            in={this.state.in}
-            timeout={400}
-            appear
-            mountOnEnter
-            unmountOnExit
-          >
-            {state => (
-              <img
-                src={srcArr[this.state.order]}
-                alt={'banner'}
-                className={styles.img + ' ' + styles['img-' + state]}
-              />
-            )}
-          </Transition>
+          <a className={styles.href} href={typeof srcArr[this.state.order] === "object" ? srcArr[this.state.order].url : null}>
+            <Transition
+              in={this.state.in}
+              timeout={400}
+              appear
+              mountOnEnter
+              unmountOnExit
+            >
+              {state => (
+                <img
+                  src={typeof srcArr[this.state.order] === "object" ? srcArr[this.state.order]['src'] : srcArr[this.state.order]}
+                  alt={'banner'}
+                  className={styles.img + ' ' + styles['img-' + state]}
+                />
+              )}
+            </Transition>
+          </a>
         </div>
         {showProgress && (
           <ProgressBar
             switch={this.state.switch}
-            width={bannerWidth}
+            width={bannerWidth * 0.8}
             height={10}
             duration={this.props.duration}
             callback={this.change}

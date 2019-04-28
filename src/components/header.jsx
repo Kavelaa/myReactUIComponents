@@ -25,6 +25,7 @@ class Header extends React.Component {
   render() {
     let mode = this.props.mode
     let pulldownClass = this.props.pulldownClass
+
     return (
       <header
         className={(

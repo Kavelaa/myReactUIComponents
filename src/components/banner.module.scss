@@ -26,7 +26,7 @@
   width: auto;
   height: 100%;
   border-radius: 1em;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.2s ease;
   &-entering {
     opacity: 0;
   }
@@ -42,8 +42,23 @@
 .index {
   color: white;
   position: absolute;
-  bottom: 5%;
-  right: 5%;
+  bottom: 3%;
+  right: 3%;
+  display: flex;
+}
+
+.dots {
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%;
+  margin: 0 0.25em;
+  &-selected {
+    background-color: white;
+  }
+  &:hover {
+    background-color: white;
+  }
 }
 
 .toggle {

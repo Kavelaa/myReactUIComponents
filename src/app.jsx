@@ -64,10 +64,13 @@ class App extends React.Component {
         <div className="wrapper">
           <Banner
             userClass="banner"
-            srcArr={['github.svg', 'github-pulldown.svg', {src:'index-drizzle.png', url:'https://drizzle.one'}]}
+            srcArr={[
+              'combills.png',
+              'cuit.png',
+              { src: 'index-drizzle.png', url: 'https://drizzle.one' }
+            ]}
             duration={5}
-            showProgress
-            showIndex
+            showDots
           />
         </div>
         <ProgressBar width={666} height={16} duration={5} />

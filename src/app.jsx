@@ -9,7 +9,8 @@ import './app.scss'
 class App extends React.Component {
   state = {
     welcomeContent: '欢迎',
-    openMask: true
+    openMask: true,
+
   }
 
   componentDidMount() {
@@ -74,7 +75,7 @@ class App extends React.Component {
             showDots
           />
         </div>
-        <ProgressBar width={666} height={16} duration={5} />
+        <ProgressBar width={666} height={16} mode={'progress'} progress={32} />
       </>
     )
   }

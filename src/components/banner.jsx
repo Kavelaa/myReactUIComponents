@@ -123,9 +123,7 @@ class Banner extends React.Component {
   }
 
   render() {
-    let srcArr = this.props.srcArr
-    let showProgress = this.props.showProgress
-    let showDots = this.props.showDots
+    let {srcArr, showProgress, showDots} = this.props
     let arrow = ['<', '>']
     let dots = srcArr.map((val, idx) => (
       <div
@@ -194,6 +192,7 @@ class Banner extends React.Component {
             switch={this.state.switch}
             width={bannerWidth * 0.8}
             height={10}
+            mode={'timer'}
             duration={this.props.duration}
             callback={this.change}
           />

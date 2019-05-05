@@ -62,7 +62,7 @@ class Banner extends React.Component {
       })
     }
 
-    //高阶函数，对不同的操作，组合一些重复性的逻辑，action Function，idx Number（特别用于goTo操作的参数）
+    //高阶函数，对不同的操作，封装一些重复性的逻辑，action Function，idx Number（特别用于goTo操作的参数）
     this.wrapperAction = (action, idx) => {
       if (this.timer) {
         clearInterval(this.timer)
@@ -123,9 +123,7 @@ class Banner extends React.Component {
   }
 
   render() {
-    let srcArr = this.props.srcArr
-    let showProgress = this.props.showProgress
-    let showDots = this.props.showDots
+    let {srcArr, showProgress, showDots} = this.props
     let arrow = ['<', '>']
     let dots = srcArr.map((val, idx) => (
       <div
@@ -194,6 +192,7 @@ class Banner extends React.Component {
             switch={this.state.switch}
             width={bannerWidth * 0.8}
             height={10}
+            mode={'timer'}
             duration={this.props.duration}
             callback={this.change}
           />

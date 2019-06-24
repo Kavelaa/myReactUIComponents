@@ -1,80 +1,91 @@
 .default {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .href {
-  display: flex;
-  justify-content: center;
-  height: 90%;
+    display: flex;
+    justify-content: center;
+    height: 90%;
 }
 
 .img {
-  display: block;
-  width: auto;
-  height: 100%;
-  border-radius: 1em;
-  transition: opacity 0.2s ease;
-  &-entering {
-    opacity: 0;
-  }
-  &-entered {
-    opacity: 1;
-  }
-  &-exiting,
-  &-exited {
-    opacity: 0;
-  }
+    display: block;
+    width: auto;
+    height: 100%;
+    border-radius: 1em;
+    transition: opacity 0.2s ease;
+
+    &-entering {
+        opacity: 0;
+    }
+
+    &-entered {
+        opacity: 1;
+    }
+
+    &-exiting,
+    &-exited {
+        opacity: 0;
+    }
 }
 
 .index {
-  color: white;
-  position: absolute;
-  bottom: 3%;
-  right: 3%;
-  display: flex;
+    color: white;
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+    display: flex;
 }
 
 .dots {
-  background-color: rgba(255, 255, 255, 0.5);
-  width: 0.8em;
-  height: 0.8em;
-  border-radius: 50%;
-  margin: 0 0.25em;
-  &-selected {
-    background-color: white;
-  }
-  &:hover {
-    background-color: white;
-  }
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    margin: 0 0.25em;
+
+    &-selected {
+        background-color: white;
+    }
+
+    &:hover {
+        background-color: white;
+    }
 }
 
-.toggle {
-  position: absolute;
-  width: 90%;
-  display: flex;
-  justify-content: space-between;
-  button {
+@mixin arrow {
+    position: absolute;
     font-size: 1.3em;
     border: none;
     padding: 0;
     color: rgba(255, 255, 255, 0.5);
     background-color: transparent;
+
     &:hover {
-      color: white;
-      cursor: pointer;
+        color: white;
+        cursor: pointer;
     }
-  }
+}
+
+.arrow0 {
+    left: 5%;
+    @include arrow
+}
+
+.arrow1 {
+    right: 5%;
+    @include arrow
 }

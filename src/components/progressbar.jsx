@@ -77,9 +77,9 @@ class ProgressBar extends React.Component {
         ]
 
         this.count = {
-          w: w,
-          h: h,
-          c: c
+          w,
+          h,
+          c
         }
         this.paint(ctx, this.count)
       }

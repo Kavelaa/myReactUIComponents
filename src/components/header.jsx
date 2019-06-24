@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './header.scss'
+import style from './header.module.scss'
 //Props
 //pullClass 处于下拉状态时的额外用户自定义类名，设置下拉状态时的样式，默认提供过渡效果
 //mode 模式,可为fixed,不填则为正常文档流
@@ -23,19 +23,17 @@ class Header extends React.Component {
     }, 250)
   }
   render() {
-    let mode = this.props.mode
-    let pulldownClass = this.props.pulldownClass
+    let { mode, pulldownClass, children } = this.props
 
     return (
       <header
-        className={(
+        className={(style.default + ' ' +
           (this.state.pulldown && mode && pulldownClass ? pulldownClass : '') +
-          ' ' +
-          mode +
-          ' default'
+            ' ' +
+            (mode ? style[mode] : '')
         ).trim()}
       >
-        {this.props.children}
+        {children}
       </header>
     )
   }

@@ -18,8 +18,29 @@ class Banner extends React.Component {
       order: 0,
       in: true,
       switch: true,
-      arrowAppear: false
+      arrowAppear: false,
+      onExitedNow: null
     }
+    this.ImgS = ({ s, srcArr }) => <Transition
+      in={s.in}
+      timeout={200}
+      appear
+      mountOnEnter
+      unmountOnExit
+      onExited={this.timerJudgeWrapper.bind(this, this.state.onExitedNow)}
+    >
+      {state => (
+        <img
+          src={
+            typeof srcArr[s.order] === 'object'
+              ? srcArr[s.order]['src']
+              : srcArr[s.order]
+          }
+          alt={'banner'}
+          className={styles.img + ' ' + styles['img-' + state]}
+        />
+      )}
+    </Transition>
 
     this.bannerRef = null
     this.getBannerRef = e => {
@@ -30,12 +51,14 @@ class Banner extends React.Component {
         if (prevState.order === 0) {
           return {
             order: props.srcArr.length - 1,
-            in: true
+            in: true,
+            switch: true
           }
         } else {
           return {
             order: prevState.order - 1,
-            in: true
+            in: true,
+            switch: true
           }
         }
       })
@@ -45,11 +68,13 @@ class Banner extends React.Component {
         if (prevState.order === props.srcArr.length - 1) {
           return {
             order: 0,
+            switch: true,
             in: true
           }
         } else {
           return {
             order: prevState.order + 1,
+            switch: true,
             in: true
           }
         }
@@ -58,49 +83,30 @@ class Banner extends React.Component {
     this.goTo = idx => {
       this.setState({
         order: idx,
-        in: true
+        in: true,
+        switch: true
       })
     }
-
-    //高阶函数，对不同的操作，封装一些重复性的逻辑，action Function，idx Number（特别用于goTo操作的参数）
-    this.wrapperAction = (action, idx) => {
-      if (this.timer) {
-        clearInterval(this.timer)
+    this.timerJudgeWrapper = action => {
+      if (!this.props.showProgress) {
+        this.timer = setInterval(this.change, this.props.duration * 1000)
       }
+      action()
+    }
+    this.actionChange = (action, idx) => {
+      this.setState(() => {
+        if (this.timer) clearInterval(this.timer)
+        if (typeof idx === 'number') return { in: false, switch: false, onExitedNow: () => action(idx) }
+        return { in: false, switch: false, onExitedNow: action }
+      })
+    }
+    this.change = () => {
+      if (this.timer) clearInterval(this.timer)
       this.setState(
         {
           in: false,
-          switch: false
-        },
-        () => {
-          setTimeout(() => {
-            if (!this.props.showProgress) {
-              this.timer = setInterval(this.change, this.props.duration * 1000)
-            }
-            //操作由此开始
-            if (!isNaN(idx)) {
-              action(idx)
-            } else {
-              action()
-            }
-            //到此为止，其余皆是重复性逻辑
-            this.setState({
-              switch: true
-            })
-          }, 205)
-        }
-      )
-    }
-
-    this.change = () => {
-      this.setState(
-        {
-          in: false
-        },
-        () => {
-          setTimeout(() => {
-            this.goAhead()
-          }, 210)
+          switch: false,
+          onExitedNow: this.goAhead
         }
       )
     }
@@ -123,7 +129,7 @@ class Banner extends React.Component {
   }
 
   render() {
-    let {srcArr, showProgress, showDots} = this.props
+    let { srcArr, showProgress, showDots } = this.props
     let arrow = ['<', '>']
     let dots = srcArr.map((val, idx) => (
       <div
@@ -133,10 +139,11 @@ class Banner extends React.Component {
           ' ' +
           (this.state.order === idx ? styles['dots-selected'] : '')
         ).trim()}
-        onClick={() => this.wrapperAction(this.goTo, idx)}
+        onClick={() => this.actionChange(this.goTo, idx)}
       />
     ))
     let bannerWidth = this.bannerRef ? this.bannerRef.offsetWidth : 0
+    const ImgS = this.ImgS
 
     return (
       <div
@@ -146,46 +153,19 @@ class Banner extends React.Component {
         className={(this.props.userClass + ' ' + styles.default).trim()}
       >
         {this.state.arrowAppear && (
-          <div className={styles.toggle}>
-            <button onClick={() => this.wrapperAction(this.goBack)}>
+          <>
+            <button className={styles.arrow0} onClick={() => this.actionChange(this.goBack)}>
               {arrow[0]}
             </button>
-            <button onClick={() => this.wrapperAction(this.goAhead)}>
+            <button className={styles.arrow1} onClick={() => this.actionChange(this.goAhead)}>
               {arrow[1]}
             </button>
-          </div>
+          </>
         )}
         {showDots && <div className={styles.index}>{dots}</div>}
         <div className={styles.wrapper}>
-          <a
-            className={styles.href}
-            href={
-              typeof srcArr[this.state.order] === 'object'
-                ? srcArr[this.state.order].url
-                : null
-            }
-            target="_blank"
-          >
-            <Transition
-              in={this.state.in}
-              timeout={200}
-              appear
-              mountOnEnter
-              unmountOnExit
-            >
-              {state => (
-                <img
-                  src={
-                    typeof srcArr[this.state.order] === 'object'
-                      ? srcArr[this.state.order]['src']
-                      : srcArr[this.state.order]
-                  }
-                  alt={'banner'}
-                  className={styles.img + ' ' + styles['img-' + state]}
-                />
-              )}
-            </Transition>
-          </a>
+          {typeof srcArr[this.state.order] === 'object' ? <a
+            className={styles.href} href={srcArr[this.state.order].url} target='_blank' rel='noopener noreferrer'><ImgS s={this.state} srcArr={srcArr} /></a> : <ImgS s={this.state} srcArr={srcArr} />}
         </div>
         {showProgress && (
           <ProgressBar
